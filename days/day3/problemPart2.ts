@@ -1,5 +1,7 @@
 import fs from "fs";
 
+type GroupOfThreeElves = string[];
+
 function convertItemToPriority(item: string): number {
   const charValue = item.charCodeAt(0);
 
@@ -20,22 +22,32 @@ console.log("started");
 
 const rucksacks = input.split("\n");
 
-const overlappingItems = rucksacks.map((rucksack) => {
-  const compartment1 = rucksack.substring(0, rucksack.length / 2);
-  const compartment2 = rucksack.substring(rucksack.length / 2, rucksack.length);
+const groupsOfThreeElves = rucksacks.reduce<GroupOfThreeElves[]>(
+  (acc, curr) => {
+    if (acc[acc.length - 1].length === 3) {
+      acc.push([]);
+    }
 
-  const compartment1Items = new Set(compartment1.split(""));
-  const compartment2Items = new Set(compartment2.split(""));
+    acc[acc.length - 1].push(curr);
+    return acc;
+  },
+  [[]]
+);
 
-  for (const item of compartment1Items) {
-    if (compartment2Items.has(item)) {
+const badges = groupsOfThreeElves.map((groupOfThreeElves) => {
+  const elf1Items = new Set(groupOfThreeElves[0]?.split("")) ?? [];
+  const elf2Items = new Set(groupOfThreeElves[1]?.split("")) ?? [];
+  const elf3Items = new Set(groupOfThreeElves[2]?.split("")) ?? [];
+
+  for (const item of elf1Items) {
+    if (elf2Items.has(item) && elf3Items.has(item)) {
       return item;
     }
   }
   throw new Error("did not find overlapping item");
 });
 
-const res = overlappingItems
+const res = badges
   .map(convertItemToPriority)
   .reduce((acc, curr) => acc + curr, 0);
 
