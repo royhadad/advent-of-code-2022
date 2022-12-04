@@ -1,6 +1,6 @@
 import fs from "fs";
 
-const input = fs.readFileSync("./days/day4/input.txt", "utf-8").trim();
+const input = fs.readFileSync(__dirname + "/input.txt", "utf-8").trim();
 
 console.log("started");
 

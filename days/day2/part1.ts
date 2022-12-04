@@ -74,7 +74,7 @@ function getGameResultForHuman(game: Game): GameResult {
   }
 }
 
-const input = fs.readFileSync("./days/day2/input.txt", "utf-8").trim();
+const input = fs.readFileSync(__dirname + "/input.txt", "utf-8").trim();
 
 console.log("started");
 

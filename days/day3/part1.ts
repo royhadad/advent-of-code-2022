@@ -14,7 +14,7 @@ function convertItemToPriority(item: string): number {
   }
 }
 
-const input = fs.readFileSync("./days/day3/input.txt", "utf-8").trim();
+const input = fs.readFileSync(__dirname + "/input.txt", "utf-8").trim();
 
 console.log("started");
 
