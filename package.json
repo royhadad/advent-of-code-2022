@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node days/day5/part2.ts"
+    "start": "ts-node days/day6/part1.ts"
   },
   "repository": {
     "type": "git",
