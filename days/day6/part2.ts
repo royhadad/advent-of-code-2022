@@ -7,6 +7,7 @@ console.log("started");
 const NUMBER_OF_UNIQUE_CHARACTERS_NEEDED = 14;
 const inputAsArray = input.split("");
 
+// O(n)
 let firstInstanceWhereTheLast4CharactersAreUnique: number | undefined = undefined;
 for (let i = 0; i <= inputAsArray.length - NUMBER_OF_UNIQUE_CHARACTERS_NEEDED; i++) {
   const fourLetterSlice = inputAsArray.slice(i, i + NUMBER_OF_UNIQUE_CHARACTERS_NEEDED);
