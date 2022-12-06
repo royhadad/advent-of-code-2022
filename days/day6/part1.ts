@@ -7,21 +7,12 @@ console.log("started");
 const NUMBER_OF_UNIQUE_CHARACTERS_NEEDED = 4;
 const inputAsArray = input.split("");
 
-let firstInstanceWhereTheLast4CharactersAreUnique: number | undefined =
-  undefined;
-for (
-  let i = 0;
-  i <= inputAsArray.length - NUMBER_OF_UNIQUE_CHARACTERS_NEEDED;
-  i++
-) {
-  const fourLetterSlice = inputAsArray.slice(
-    i,
-    i + NUMBER_OF_UNIQUE_CHARACTERS_NEEDED
-  );
+let firstInstanceWhereTheLast4CharactersAreUnique: number | undefined = undefined;
+for (let i = 0; i <= inputAsArray.length - NUMBER_OF_UNIQUE_CHARACTERS_NEEDED; i++) {
+  const fourLetterSlice = inputAsArray.slice(i, i + NUMBER_OF_UNIQUE_CHARACTERS_NEEDED);
   if (new Set(fourLetterSlice).size === fourLetterSlice.length) {
     // no duplicates
-    firstInstanceWhereTheLast4CharactersAreUnique =
-      i + NUMBER_OF_UNIQUE_CHARACTERS_NEEDED;
+    firstInstanceWhereTheLast4CharactersAreUnique = i + NUMBER_OF_UNIQUE_CHARACTERS_NEEDED;
     break;
   }
 }

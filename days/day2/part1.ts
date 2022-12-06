@@ -24,9 +24,7 @@ const convertGameActionCodeToGameActionType = (code: string): GameAction => {
   }
 };
 
-function convertGameDesiredResultCodeToType(
-  getDesiredResultCode: string
-): GameResult {
+function convertGameDesiredResultCodeToType(getDesiredResultCode: string): GameResult {
   if (getDesiredResultCode === "X") {
     return "LOSE";
   } else if (getDesiredResultCode === "Y") {
@@ -37,22 +35,15 @@ function convertGameDesiredResultCodeToType(
   throw new Error("Invalid Game desiredResult code");
 }
 
-function getCorrectActionForHumanToGetDesiredResult(
-  gameWithDesiredResult: GameWithDesiredResult
-): GameAction {
-  if (
-    getGameResultForHuman({ ...gameWithDesiredResult, human: "ROCK" }) ===
-    gameWithDesiredResult.desiredResult
-  ) {
+function getCorrectActionForHumanToGetDesiredResult(gameWithDesiredResult: GameWithDesiredResult): GameAction {
+  if (getGameResultForHuman({ ...gameWithDesiredResult, human: "ROCK" }) === gameWithDesiredResult.desiredResult) {
     return "ROCK";
   } else if (
-    getGameResultForHuman({ ...gameWithDesiredResult, human: "PAPER" }) ===
-    gameWithDesiredResult.desiredResult
+    getGameResultForHuman({ ...gameWithDesiredResult, human: "PAPER" }) === gameWithDesiredResult.desiredResult
   ) {
     return "PAPER";
   } else if (
-    getGameResultForHuman({ ...gameWithDesiredResult, human: "SCISSORS" }) ===
-    gameWithDesiredResult.desiredResult
+    getGameResultForHuman({ ...gameWithDesiredResult, human: "SCISSORS" }) === gameWithDesiredResult.desiredResult
   ) {
     return "SCISSORS";
   } else {

@@ -20,9 +20,7 @@ const positionWithArrays = [
   ["S", "G", "P"],
 ];
 
-function convertPositionWithArraysToPosition(
-  positionWithArrays: string[][]
-): Position {
+function convertPositionWithArraysToPosition(positionWithArrays: string[][]): Position {
   const position: Position = [];
   positionWithArrays.forEach((row, rowIndex) => {
     const rowStack = new Stack<string>();
@@ -35,8 +33,7 @@ function convertPositionWithArraysToPosition(
   return position;
 }
 
-const position: Position =
-  convertPositionWithArraysToPosition(positionWithArrays);
+const position: Position = convertPositionWithArraysToPosition(positionWithArrays);
 
 type Instruction = {
   amount: number;
@@ -53,17 +50,12 @@ const instructions = input.split("\n").map<Instruction>((rawInstruction) => {
   };
 });
 
-function moveCargosAccordingToInstruction(
-  position: Position,
-  instruction: Instruction
-): void {
+function moveCargosAccordingToInstruction(position: Position, instruction: Instruction): void {
   const cargosToMove: string[] = [];
   for (let i = 0; i < instruction.amount; i++) {
     const singleCargoToMove = position[instruction.from].pop();
     if (!singleCargoToMove) {
-      throw new Error(
-        `No cargo to move from ${instruction.from} to ${instruction.to}`
-      );
+      throw new Error(`No cargo to move from ${instruction.from} to ${instruction.to}`);
     }
     cargosToMove.push(singleCargoToMove);
   }
@@ -77,9 +69,7 @@ instructions.forEach((instruction) => {
 });
 
 const positionWithoutTheFirstStack = position.slice(1); // because we offset the starting from 0
-const topCargoOfEachStack = positionWithoutTheFirstStack.map((stack) =>
-  stack.peek()
-);
+const topCargoOfEachStack = positionWithoutTheFirstStack.map((stack) => stack.peek());
 
 const res = topCargoOfEachStack.join("");
 

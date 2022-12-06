@@ -47,9 +47,7 @@ const badges = groupsOfThreeElves.map((groupOfThreeElves) => {
   throw new Error("did not find overlapping item");
 });
 
-const res = badges
-  .map(convertItemToPriority)
-  .reduce((acc, curr) => acc + curr, 0);
+const res = badges.map(convertItemToPriority).reduce((acc, curr) => acc + curr, 0);
 
 console.log(res);
 

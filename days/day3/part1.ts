@@ -35,9 +35,7 @@ const overlappingItems = rucksacks.map((rucksack) => {
   throw new Error("did not find overlapping item");
 });
 
-const res = overlappingItems
-  .map(convertItemToPriority)
-  .reduce((acc, curr) => acc + curr, 0);
+const res = overlappingItems.map(convertItemToPriority).reduce((acc, curr) => acc + curr, 0);
 
 console.log(res);
 
