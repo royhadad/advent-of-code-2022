@@ -4,7 +4,7 @@ const input = fs.readFileSync(__dirname + "/input.txt", "utf-8").trim();
 
 console.log("started");
 
-type InputRow = CdCommand | LsCommand | LsOutputDirectory | LsOutputFile;
+export type InputRow = CdCommand | LsCommand | LsOutputDirectory | LsOutputFile;
 
 enum InputRowType {
   CD = "cd",
@@ -32,7 +32,7 @@ type LsOutputFile = {
   size: number;
 };
 
-function parseInput(input: string): InputRow[] {
+export function parseInput(input: string): InputRow[] {
   const inputRows = input.split("\n");
 
   const parsedInputRows: InputRow[] = inputRows.map<InputRow>((row) => {
@@ -63,7 +63,7 @@ function parseInput(input: string): InputRow[] {
   return parsedInputRows;
 }
 
-type Directory = {
+export type Directory = {
   name: string;
   size: number | null;
   directories: Directory[];
@@ -76,7 +76,7 @@ type File = {
   size: number;
 };
 
-function convertParsedInputToFileSystem(parsedInputRows: InputRow[]): Directory {
+export function convertParsedInputToFileSystem(parsedInputRows: InputRow[]): Directory {
   const fileSystem: Directory = {
     name: "/",
     size: null,
@@ -124,9 +124,12 @@ function convertParsedInputToFileSystem(parsedInputRows: InputRow[]): Directory 
   return fileSystem;
 }
 
-type DirectoryWithSize = Directory & { size: number; directories: DirectoryWithSize[] };
+export type DirectoryWithSize = Omit<Directory, "size" | "directories"> & {
+  size: number;
+  directories: DirectoryWithSize[];
+};
 
-function addDirectorySizesToEntireFileSystem(directory: Directory): DirectoryWithSize {
+export function addDirectorySizesToEntireFileSystem(directory: Directory): DirectoryWithSize {
   const childrenFileSizes = directory.files.reduce((acc, file) => acc + file.size, 0);
   const childrenDirectorySizes = directory.directories.reduce((acc, dir) => {
     if (dir.size === null) {
@@ -142,7 +145,7 @@ function addDirectorySizesToEntireFileSystem(directory: Directory): DirectoryWit
   return directory as DirectoryWithSize;
 }
 
-function getAllDirectoriesWithUpToSize(fileSystem: DirectoryWithSize, size: number): DirectoryWithSize[] {
+export function getAllDirectoriesWithUpToSize(fileSystem: DirectoryWithSize, size: number): DirectoryWithSize[] {
   const directoriesWithSizeUpTo100000: DirectoryWithSize[] = [];
   function findDirectoriesWithMaxSize(directory: DirectoryWithSize): void {
     if (directory.size <= size) {
