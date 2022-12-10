@@ -4,23 +4,23 @@ const input = fs.readFileSync(__dirname + "/input.txt", "utf-8").trim();
 
 console.log("started");
 
-enum Direction {
+export enum Direction {
   UP = "up",
   DOWN = "down",
   LEFT = "left",
   RIGHT = "right",
 }
-type Action = {
+export type Action = {
   direction: Direction;
   numberOfSteps: number;
 };
-type ActionsSpreadOut = Direction[];
-type Position = {
+export type ActionsSpreadOut = Direction[];
+export type Position = {
   x: number;
   y: number;
 };
 
-function parseInput(input: string): ActionsSpreadOut {
+export function parseInput(input: string): ActionsSpreadOut {
   function parseInputDirectionToDirection(inputDirection: string): Direction {
     if (inputDirection === "U") return Direction.UP;
     if (inputDirection === "D") return Direction.DOWN;
@@ -47,11 +47,11 @@ function parseInput(input: string): ActionsSpreadOut {
   return actionsSpreadOut;
 }
 
-function simulateActionsAndReturnPositionsTheTailHasVisitedWithDuplicates(actions: ActionsSpreadOut): Position[] {
-  function getDistanceBetweenTwoPositions(position1: Position, position2: Position): number {
-    return Math.hypot(position2.x - position1.x, position2.y - position1.y);
-  }
+export function getDistanceBetweenTwoPositions(position1: Position, position2: Position): number {
+  return Math.hypot(position2.x - position1.x, position2.y - position1.y);
+}
 
+function simulateActionsAndReturnPositionsTheTailHasVisitedWithDuplicates(actions: ActionsSpreadOut): Position[] {
   const head: Position = { x: 0, y: 0 };
   const tail: Position = { x: 0, y: 0 };
 
@@ -92,7 +92,7 @@ function simulateActionsAndReturnPositionsTheTailHasVisitedWithDuplicates(action
   return positionsTheTailHasBeenAt;
 }
 
-function removeDuplicatePositions(positions: Position[]): Position[] {
+export function removeDuplicatePositions(positions: Position[]): Position[] {
   const positionToStringPosition = (position: Position): string => `${position.x},${position.y}`;
   const stringPositionToPosition = (stringPosition: string): Position => {
     const [x, y] = stringPosition.split(",");
