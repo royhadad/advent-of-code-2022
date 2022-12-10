@@ -1,15 +1,12 @@
 import fs from "fs";
 
-const input = fs.readFileSync(__dirname + "/input.txt", "utf-8").trim();
-
-console.log("started");
-
 export enum Direction {
   UP = "up",
   DOWN = "down",
   LEFT = "left",
   RIGHT = "right",
 }
+
 export type Action = {
   direction: Direction;
   numberOfSteps: number;
@@ -105,13 +102,20 @@ export function removeDuplicatePositions(positions: Position[]): Position[] {
   return uniquePositionsAsStrings.map(stringPositionToPosition);
 }
 
-const actions = parseInput(input);
-const positionsTheTailHasBeenAt = simulateActionsAndReturnPositionsTheTailHasVisitedWithDuplicates(actions);
-const positionsTheTailHasBeenAtWithoutDuplicates = removeDuplicatePositions(positionsTheTailHasBeenAt);
-const numberOfUniquePositionsTheTailHasBeenAt = positionsTheTailHasBeenAtWithoutDuplicates.length;
+function main(): void {
+  const input = fs.readFileSync(__dirname + "/input.txt", "utf-8").trim();
 
-const res = numberOfUniquePositionsTheTailHasBeenAt;
+  console.log("started");
+  const actions = parseInput(input);
+  const positionsTheTailHasBeenAt = simulateActionsAndReturnPositionsTheTailHasVisitedWithDuplicates(actions);
+  const positionsTheTailHasBeenAtWithoutDuplicates = removeDuplicatePositions(positionsTheTailHasBeenAt);
+  const numberOfUniquePositionsTheTailHasBeenAt = positionsTheTailHasBeenAtWithoutDuplicates.length;
 
-console.log(res);
+  const res = numberOfUniquePositionsTheTailHasBeenAt;
 
-console.log("done");
+  console.log(res);
+
+  console.log("done");
+}
+
+// main();

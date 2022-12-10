@@ -8,17 +8,18 @@ import {
   getDistanceBetweenTwoPositions,
 } from "./part1";
 
-const input = fs.readFileSync(__dirname + "/input.txt", "utf-8").trim();
-
-console.log("started");
-
 function simulateActionsAndReturnPositionsTheTailHasVisitedWithDuplicates10knots(
   actions: ActionsSpreadOut
 ): Position[] {
-  const head: Position = { x: 0, y: 0 };
-  const tail: Position = { x: 0, y: 0 };
+  const startingPosition = { x: 0, y: 0 };
+  const knots: Position[] = Array(10)
+    .fill(null)
+    .map(() => ({ ...startingPosition }));
 
-  const positionsTheTailHasBeenAt: Position[] = [{ ...tail }];
+  const head = knots[0];
+  const tail = knots[9];
+
+  const positionsTheTailHasBeenAt: Position[] = [{ ...startingPosition }];
 
   actions.forEach((action) => {
     // move head
@@ -34,34 +35,48 @@ function simulateActionsAndReturnPositionsTheTailHasVisitedWithDuplicates10knots
       throw new Error("invalid action");
     }
 
-    if (getDistanceBetweenTwoPositions(head, tail) >= 2) {
-      // move tail
-      if (head.x > tail.x) {
-        tail.x++;
-      } else if (head.x < tail.x) {
-        tail.x--;
-      }
+    for (let i = 1; i < knots.length; i++) {
+      const lastOneThatMoved = knots[i - 1];
+      const currentToMove = knots[i];
 
-      if (head.y > tail.y) {
-        tail.y++;
-      } else if (head.y < tail.y) {
-        tail.y--;
-      }
+      if (getDistanceBetweenTwoPositions(lastOneThatMoved, currentToMove) >= 2) {
+        // move currentToMove
+        if (lastOneThatMoved.x > currentToMove.x) {
+          currentToMove.x++;
+        } else if (lastOneThatMoved.x < currentToMove.x) {
+          currentToMove.x--;
+        }
 
-      positionsTheTailHasBeenAt.push({ ...tail });
+        if (lastOneThatMoved.y > currentToMove.y) {
+          currentToMove.y++;
+        } else if (lastOneThatMoved.y < currentToMove.y) {
+          currentToMove.y--;
+        }
+
+        if (currentToMove === tail) {
+          positionsTheTailHasBeenAt.push({ ...tail });
+        }
+      }
     }
   });
 
   return positionsTheTailHasBeenAt;
 }
 
-const actions = parseInput(input);
-const positionsTheTailHasBeenAt = simulateActionsAndReturnPositionsTheTailHasVisitedWithDuplicates10knots(actions);
-const positionsTheTailHasBeenAtWithoutDuplicates = removeDuplicatePositions(positionsTheTailHasBeenAt);
-const numberOfUniquePositionsTheTailHasBeenAt = positionsTheTailHasBeenAtWithoutDuplicates.length;
+function main(): void {
+  const input = fs.readFileSync(__dirname + "/input.txt", "utf-8").trim();
 
-const res = numberOfUniquePositionsTheTailHasBeenAt;
+  console.log("started");
+  const actions = parseInput(input);
+  const positionsTheTailHasBeenAt = simulateActionsAndReturnPositionsTheTailHasVisitedWithDuplicates10knots(actions);
+  const positionsTheTailHasBeenAtWithoutDuplicates = removeDuplicatePositions(positionsTheTailHasBeenAt);
+  const numberOfUniquePositionsTheTailHasBeenAt = positionsTheTailHasBeenAtWithoutDuplicates.length;
 
-console.log(res);
+  const res = numberOfUniquePositionsTheTailHasBeenAt;
 
-console.log("done");
+  console.log(res);
+
+  console.log("done");
+}
+
+main();
