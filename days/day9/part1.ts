@@ -74,15 +74,15 @@ function simulateActionsAndReturnPositionsTheTailHasVisitedWithDuplicates(action
     if (getDistanceBetweenTwoPositions(head, tail) >= 2) {
       // move tail
       if (head.x > tail.x) {
-        tail.x = head.x - 1;
+        tail.x++;
       } else if (head.x < tail.x) {
-        tail.x = head.x + 1;
+        tail.x--;
       }
 
       if (head.y > tail.y) {
-        tail.y = head.y - 1;
+        tail.y++;
       } else if (head.y < tail.y) {
-        tail.y = head.y + 1;
+        tail.y--;
       }
 
       positionsTheTailHasBeenAt.push({ ...tail });
@@ -110,12 +110,8 @@ const positionsTheTailHasBeenAt = simulateActionsAndReturnPositionsTheTailHasVis
 const positionsTheTailHasBeenAtWithoutDuplicates = removeDuplicatePositions(positionsTheTailHasBeenAt);
 const numberOfUniquePositionsTheTailHasBeenAt = positionsTheTailHasBeenAtWithoutDuplicates.length;
 
-console.log("actions: ", actions.length);
-console.log("positionsTheTailHasBeenAt: ", positionsTheTailHasBeenAt.length);
-console.log("numberOfUniquePositionsTheTailHasBeenAt: ", numberOfUniquePositionsTheTailHasBeenAt);
+const res = numberOfUniquePositionsTheTailHasBeenAt;
 
-// const res = numberOfUniquePositionsTheTailHasBeenAt;
-
-// console.log(res);
+console.log(res);
 
 console.log("done");
