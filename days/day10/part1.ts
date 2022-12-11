@@ -51,4 +51,4 @@ function main(): void {
   console.log("done");
 }
 
-main();
+// main();
