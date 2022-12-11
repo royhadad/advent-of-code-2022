@@ -26,17 +26,12 @@ export function main(): void {
 
   const screen: Screen = createEmptyScreen();
 
+  let currentCycle = 0;
   screen.forEach((row, rowIndex) => {
     row.forEach((pixel, pixelIndex) => {
-      const currentPixelIndex = pixelIndex;
-      const currentCycle = rowIndex * NUMBER_OF_PIXELS_PER_ROW + (pixelIndex + 1);
+      currentCycle++;
       const valueOfRegisterXAtCurrentCycle = valueOfRegisterXAtEveryStartOfCycle[currentCycle];
-
-      if (
-        valueOfRegisterXAtCurrentCycle === currentPixelIndex ||
-        valueOfRegisterXAtCurrentCycle + 1 === currentPixelIndex ||
-        valueOfRegisterXAtCurrentCycle - 1 === currentPixelIndex
-      ) {
+      if (valueOfRegisterXAtCurrentCycle >= pixelIndex - 1 && valueOfRegisterXAtCurrentCycle <= pixelIndex + 1) {
         screen[rowIndex][pixelIndex] = PixelOptions.ON;
       }
     });
