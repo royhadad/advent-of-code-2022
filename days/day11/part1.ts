@@ -1,5 +1,5 @@
-type Item = number;
-type Monkey = {
+export type Item = number;
+export type Monkey = {
   items: Item[];
   operation: (oldValue: Item) => Item;
   test: (oldValue: Item) => boolean;
@@ -8,7 +8,8 @@ type Monkey = {
   numberOfItemsInspected: number;
 };
 
-const monkeys: Monkey[] = [
+// the input, parsed by hand
+export const monkeys: Monkey[] = [
   {
     items: [63, 57],
     operation: (oldValue) => oldValue * 11,
@@ -107,4 +108,4 @@ function main(): void {
   console.log("done");
 }
 
-main();
+// main();
