@@ -3,11 +3,11 @@ import { monkeys, Monkey, Item } from "./part1";
 function main(): void {
   console.log("started");
 
-  for (let roundNumber = 1; roundNumber <= 20; roundNumber++) {
+  for (let roundNumber = 1; roundNumber <= 10000; roundNumber++) {
     console.log(`Starting round ${roundNumber}`);
     monkeys.forEach((monkey) => {
       monkey.items.forEach((item, index) => {
-        const itemWithNewWorryLevel = Math.floor(monkey.operation(item) / 3);
+        const itemWithNewWorryLevel = Math.floor(monkey.operation(item));
         monkey.numberOfItemsInspected++;
         if (monkey.test(itemWithNewWorryLevel)) {
           monkeys[monkey.monkeyToThrowToOnTestSuccess].items.push(itemWithNewWorryLevel);
