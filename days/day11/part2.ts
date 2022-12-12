@@ -1,3 +1,5 @@
+import lcm from "compute-lcm";
+
 export type Item = number;
 export type Monkey = {
   items: Item[];
@@ -9,7 +11,7 @@ export type Monkey = {
 };
 
 // the input, parsed by hand
-export const monkeysWithBigIntItems: Monkey[] = [
+export const monkeys: Monkey[] = [
   {
     items: [63, 57],
     operation: (oldValue) => oldValue * 11,
@@ -76,34 +78,38 @@ export const monkeysWithBigIntItems: Monkey[] = [
   },
 ];
 
-const multiplyOfAllDivisibilityNumbers = monkeysWithBigIntItems.reduce(
-  (acc, monkey) => acc * monkey.testDivisibilityBy,
-  1
-);
-
 function main(): void {
   console.log("started");
 
-  for (let roundNumber = 1; roundNumber <= 20; roundNumber++) {
+  const lowestCommonMultipleOfAllDivisibilityNumbers = lcm(monkeys.map((monkey) => monkey.testDivisibilityBy));
+
+  if (lowestCommonMultipleOfAllDivisibilityNumbers === null || isNaN(lowestCommonMultipleOfAllDivisibilityNumbers)) {
+    throw new Error("Could not calculate LCM");
+  } else {
+    console.log("lowestCommonMultipleOfAllDivisibilityNumbers", lowestCommonMultipleOfAllDivisibilityNumbers);
+  }
+
+  for (let roundNumber = 1; roundNumber <= 10000; roundNumber++) {
     console.log(`Starting round ${roundNumber}`);
     if (roundNumber % 100 === 0) {
       console.log("DIVISIBLE BY 100");
     }
-    monkeysWithBigIntItems.forEach((monkey) => {
+    monkeys.forEach((monkey) => {
       monkey.items.forEach((item, index) => {
         const itemWithNewWorryLevel = monkey.operation(item);
+        const itemWithNewWorryLevelReduced = itemWithNewWorryLevel % lowestCommonMultipleOfAllDivisibilityNumbers;
         monkey.numberOfItemsInspected++;
-        if (itemWithNewWorryLevel % monkey.testDivisibilityBy === 0) {
-          monkeysWithBigIntItems[monkey.monkeyToThrowToOnTestSuccess].items.push(itemWithNewWorryLevel);
+        if (itemWithNewWorryLevelReduced % monkey.testDivisibilityBy === 0) {
+          monkeys[monkey.monkeyToThrowToOnTestSuccess].items.push(itemWithNewWorryLevelReduced);
         } else {
-          monkeysWithBigIntItems[monkey.monkeyToThrowToOnTestFailure].items.push(itemWithNewWorryLevel);
+          monkeys[monkey.monkeyToThrowToOnTestFailure].items.push(itemWithNewWorryLevelReduced);
         }
       });
       monkey.items = [];
     });
   }
 
-  const numberOfItemsEachMonkeyInspectedSortedDesc = monkeysWithBigIntItems
+  const numberOfItemsEachMonkeyInspectedSortedDesc = monkeys
     .map((monkey) => monkey.numberOfItemsInspected)
     .sort((a, b) => b - a);
 
