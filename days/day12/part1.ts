@@ -65,7 +65,7 @@ function isPositionInMap(position: Position, map: Map): boolean {
   }
 }
 
-export function getTwoDimensionalDistanceBetweenTwoPositions(position1: Position, position2: Position): number {
+function getTwoDimensionalDistanceBetweenTwoPositions(position1: Position, position2: Position): number {
   return Math.hypot(position2.x - position1.x, position2.y - position1.y);
 }
 
@@ -82,8 +82,12 @@ function isMovePossible(start: Position, destinationPosition: Position, map: Map
   return true;
 }
 
+function arePositionsEqual(position1: Position, position2: Position): boolean {
+  return position1.x === position2.x && position1.y === position2.y;
+}
+
 function isPositionAlreadyVisited(currentPosition: HistoryTreeNode, positionToCheck: Position): boolean {
-  if (positionToCheck.x === currentPosition.position.x && positionToCheck.y === currentPosition.position.y) {
+  if (arePositionsEqual(currentPosition.position, positionToCheck)) {
     return true;
   }
   if (currentPosition.previousPosition === null) {
@@ -146,7 +150,15 @@ function createRoutesTree(map: Map, start: Position, end: Position): HistoryTree
   createRoutesTreeRecursive(map, end, rootTreeNode);
   return rootTreeNode;
 }
+let recursionCount = 0;
 function createRoutesTreeRecursive(map: Map, end: Position, currentTreeNode: HistoryTreeNode): void {
+  recursionCount++;
+  if (recursionCount === 1000000) {
+    console.log("got to 1000000");
+  }
+  if (arePositionsEqual(currentTreeNode.position, end)) {
+    return;
+  }
   currentTreeNode.nextPositions = getPossibleNextPositions(map, currentTreeNode).map((position) => ({
     position,
     previousPosition: currentTreeNode,
