@@ -35,12 +35,12 @@ type Route = {
 };
 
 function findShortestRouteToAZeroLevelPositionBFS(map: Map, start: Position): Position[] {
-  const visitedPositionMap = new VisitedPositionsMap();
+  const visitedPositionsMap = new VisitedPositionsMap();
   const startingRoute: Route = {
     position: start,
     previousPosition: null,
   };
-  const endOfShortestRouteToEndPosition = recursiveFindShortestRouteToAZeroLevelPositionBFS(map, visitedPositionMap, [
+  const endOfShortestRouteToEndPosition = recursiveFindShortestRouteToAZeroLevelPositionBFS(map, visitedPositionsMap, [
     startingRoute,
   ]);
 

@@ -56,7 +56,7 @@ function findShortestRouteToEndPositionBFS(map: Map, start: Position, end: Posit
 
 function recursiveFindShortestRouteToEndPositionBFS(
   map: Map,
-  visitedPositionMap: VisitedPositionsMap,
+  visitedPositionsMap: VisitedPositionsMap,
   end: Position,
   currentRoutes: Route[]
 ): Route {
@@ -77,14 +77,14 @@ function recursiveFindShortestRouteToEndPositionBFS(
 
   // get rid of positions that have already been visited, remove duplicates as well
   const nextRoutesFiltered = nextRoutes.filter((nextNode) => {
-    const shouldKeepPosition = !visitedPositionMap.isVisited(nextNode.position);
+    const shouldKeepPosition = !visitedPositionsMap.isVisited(nextNode.position);
     if (shouldKeepPosition) {
-      visitedPositionMap.markAsVisited(nextNode.position);
+      visitedPositionsMap.markAsVisited(nextNode.position);
     }
     return shouldKeepPosition;
   });
 
-  return recursiveFindShortestRouteToEndPositionBFS(map, visitedPositionMap, end, nextRoutesFiltered);
+  return recursiveFindShortestRouteToEndPositionBFS(map, visitedPositionsMap, end, nextRoutesFiltered);
 }
 
 const input = fs.readFileSync(__dirname + "/input.txt", "utf-8").trim();
