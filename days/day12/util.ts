@@ -7,13 +7,6 @@ export type Position = {
   y: number;
 };
 
-export enum Move {
-  UP = "up",
-  DOWN = "down",
-  LEFT = "left",
-  RIGHT = "right",
-}
-
 export function parseInputToMap(input: string): { map: Map; start: Position; end: Position } {
   const start: Position = { x: -1, y: -1 };
   const end: Position = { x: -1, y: -1 };
@@ -77,4 +70,21 @@ export function isMovePossible(start: Position, destinationPosition: Position, m
 
 export function arePositionsEqual(position1: Position, position2: Position): boolean {
   return position1.x === position2.x && position1.y === position2.y;
+}
+
+export class VisitedPositionsMap {
+  private readonly map;
+  constructor() {
+    this.map = new Map<string, boolean>();
+  }
+  private positionToUniqueKey(position: Position): string {
+    return `${position.x},${position.y}`;
+  }
+
+  public isVisited(position: Position): boolean {
+    return this.map.get(this.positionToUniqueKey(position)) ?? false;
+  }
+  public markAsVisited(position: Position): void {
+    this.map.set(this.positionToUniqueKey(position), true);
+  }
 }
