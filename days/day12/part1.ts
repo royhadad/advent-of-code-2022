@@ -61,9 +61,9 @@ function recursiveFindShortestRouteToEndPositionBFS(
   currentRoutes: Route[]
 ): Route {
   // if one of the current positions is the end positions, we found the shortest route, return it!
-  for (const currentTreeNode of currentRoutes) {
-    if (arePositionsEqual(currentTreeNode.position, end)) {
-      return currentTreeNode;
+  for (const currentRoute of currentRoutes) {
+    if (arePositionsEqual(currentRoute.position, end)) {
+      return currentRoute;
     }
   }
 

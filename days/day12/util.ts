@@ -56,7 +56,7 @@ export function getTwoDimensionalDistanceBetweenTwoPositions(position1: Position
 }
 
 export function isMovePossible(start: Position, destinationPosition: Position, map: Map): boolean {
-  if (!isPositionInMap(destinationPosition, map)) {
+  if (!isPositionInMap(destinationPosition, map) || !isPositionInMap(start, map)) {
     return false;
   }
   if (getTwoDimensionalDistanceBetweenTwoPositions(start, destinationPosition) > 1) {
